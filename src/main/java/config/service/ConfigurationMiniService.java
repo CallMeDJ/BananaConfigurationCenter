@@ -10,8 +10,6 @@ import java.rmi.RemoteException;
 
 public interface ConfigurationMiniService extends Remote {
     int changeConfig(ConfigDTO configDTO)  throws RemoteException;
-    ConfigurationCenterService getConfigurationCenterService() throws RemoteException;
     void registerClass(Class c) throws RemoteException;
-     String getServerUri() throws RemoteException;
-     void init() throws RemoteException, AlreadyBoundException, MalformedURLException, NotBoundException;
+    void init() throws RemoteException, AlreadyBoundException, MalformedURLException, NotBoundException;
 }

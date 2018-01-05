@@ -28,11 +28,6 @@ public class ConfigurationMiniServiceImpl extends UnicastRemoteObject implements
     private String port;
     public String serverUri = "127.0.0.1:8000/"+SERVER_URL;
 
-    @Override
-    public ConfigurationCenterService getConfigurationCenterService() {
-        return configurationCenterService;
-    }
-
     public void setConfigurationCenterService(ConfigurationCenterService configurationCenterService) {
         this.configurationCenterService = configurationCenterService;
     }
@@ -57,10 +52,6 @@ public class ConfigurationMiniServiceImpl extends UnicastRemoteObject implements
         Logger.log("register to "+master+" success!");
     }
 
-    @Override
-    public String getServerUri() throws RemoteException{
-        return serverUri;
-    }
 
     public void setServerUri(String serverUri) {
         this.serverUri = serverUri;

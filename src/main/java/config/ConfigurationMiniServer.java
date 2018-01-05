@@ -20,24 +20,21 @@ public class ConfigurationMiniServer {
         try {
             Set<Class> classesToRegister = new HashSet<>();
             classesToRegister.add(Configuration.class);
+            ConfigurationMiniService service = new ConfigurationMiniServiceImpl("127.0.0.1","8000");
+            service.init();
 
-                ConfigurationMiniService service = new ConfigurationMiniServiceImpl("127.0.0.1","8000");
-                service.init();
+            for(Class currentClass : classesToRegister){
+                service.registerClass(currentClass);
+            }
 
 
-
-                for(Class currentClass : classesToRegister){
-                    service.registerClass(currentClass);
+            Runnable check = new Runnable() {
+                @Override
+                public void run() {
+                    Logger.log(Configuration.NUMBER_CONFIG);
+                    Logger.log(Configuration.SWITCH_CONFIG);
                 }
-
-
-                Runnable check = new Runnable() {
-                    @Override
-                    public void run() {
-                        Logger.log(Configuration.NUMBER_CONFIG);
-                        Logger.log(Configuration.SWITCH_CONFIG);
-                    }
-                };
+            };
 
             ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
             scheduledExecutorService.scheduleAtFixedRate(check,0,3, TimeUnit.SECONDS);
