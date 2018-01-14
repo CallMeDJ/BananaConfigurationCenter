@@ -1,5 +1,7 @@
 package config;
 
+import config.service.ConfigTypeEmun;
+
 import java.io.Serializable;
 
 public class ConfigDTO implements Serializable{
@@ -9,18 +11,18 @@ public class ConfigDTO implements Serializable{
     private String className;
     private  String filed;
     private  String desc;
-    private String valueType;
+    private ConfigTypeEmun valueType;
     private  String value;
 
     public String getValue() {
         return value;
     }
 
-    public String getValueType() {
+    public ConfigTypeEmun getValueType() {
         return valueType;
     }
 
-    public void setValueType(String valueType) {
+    public void setValueType(ConfigTypeEmun valueType) {
         this.valueType = valueType;
     }
 

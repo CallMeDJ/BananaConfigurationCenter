@@ -1,5 +1,6 @@
 package config;
 
+import config.service.ConfigTypeEmun;
 import config.service.ConfigurationCenterService;
 import config.service.Logger;
 import config.service.impl.ConfigurationCenterServiceImpl;
@@ -24,7 +25,7 @@ public class ConfigurationCenter {
             Scanner scanner = new Scanner(System.in);
             System.out.println("input\n" +
                     "get //to get all configs \n" +
-                    "push 127.0.0.1:8000/cfg_miniserver config.Configuration NUMBER_CONFIG 6 java.lang.Integer \r\n");
+                    "push 127.0.0.1:8000/cfg_miniserver config.Configuration NUMBER_CONFIG 6 INTEGER \r\n");
             while (scanner.hasNext()){
                 String command = scanner.nextLine();
                 String[] commanArray = command.split(" ");
@@ -46,7 +47,7 @@ public class ConfigurationCenter {
                     configDTO.setClassName(className);
                     configDTO.setServer(server);
                     configDTO.setValue(value);
-                    configDTO.setValueType(valueType);
+                    configDTO.setValueType(ConfigTypeEmun.valueOf(valueType));
 
                     int result = service.pushConfig(configDTO);
                     if(result == 200){

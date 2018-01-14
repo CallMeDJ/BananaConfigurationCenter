@@ -2,6 +2,7 @@ package config.service.impl;
 
 import config.Config;
 import config.ConfigDTO;
+import config.service.ConfigTypeEmun;
 import config.service.ConfigurationCenterService;
 import config.service.ConfigurationMiniService;
 import config.service.Logger;
@@ -42,7 +43,6 @@ public class ConfigurationMiniServiceImpl extends UnicastRemoteObject implements
 
     }
 
-    @Override
     public void init() throws RemoteException, AlreadyBoundException, MalformedURLException, NotBoundException {
         configurationCenterService = (ConfigurationCenterService) Naming.lookup(master);
 
@@ -57,8 +57,11 @@ public class ConfigurationMiniServiceImpl extends UnicastRemoteObject implements
         this.serverUri = serverUri;
     }
 
-    @Override
+
     public int changeConfig(ConfigDTO configDTO) throws RemoteException {
+
+        Logger.log("receice config change request , ConfigDto is "+configDTO.toString());
+
         Class targetClass = this.configClasses.get(configDTO.getClassName());
         if(targetClass == null){
             return 500;
@@ -67,13 +70,14 @@ public class ConfigurationMiniServiceImpl extends UnicastRemoteObject implements
         try {
             Field field = targetClass.getField(configDTO.getFiled());
             field.setAccessible(true);
+
             switch (configDTO.getValueType()){
 
-                case "java.lang.Integer":
+                case INTEGER:
                 field.set(null,Integer.valueOf(configDTO.getValue()));
                     break;
 
-                case "java.lang.Boolean":
+                case BOOLEAN:
                     field.set(null,Boolean.valueOf(configDTO.getValue()));
                     break;
 
@@ -102,7 +106,7 @@ public class ConfigurationMiniServiceImpl extends UnicastRemoteObject implements
                 configDTO.setFiled(field.getName());
                 configDTO.setDesc(field.getAnnotation(Config.class).desc());
                 try {
-                    configDTO.setValueType(field.getType().getName());
+                    configDTO.setValueType(ConfigTypeEmun.ofJavaType(field.getType().getName()));
                     Object value = field.get(null);
                     configDTO.setValue(String.valueOf(value));
 

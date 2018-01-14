@@ -9,8 +9,8 @@
         <module name="BananaConfigurationCenter" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="BananaConfigurationCenter" target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="BananaConfigurationCenter" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
